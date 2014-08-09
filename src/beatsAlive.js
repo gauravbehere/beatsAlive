@@ -25,7 +25,9 @@
 
 
 
-var context = new webkitAudioContext();
+window.AudioContext = window.AudioContext || window.webkitAudioContext;
+var context = new AudioContext();
+
 var audioAnimation, audioBuffer, source,sourceNode, analyser, audio, rectSVG,
 highPassFilter, lowPassFilter, gainFilter, storedVol = 1, progressTimer = null,
 playList = [], indexPlaying = -1, audioOver = false, gainNode = null,
@@ -99,7 +101,7 @@ function setupAudioNodes() {
     analyser.smoothingTimeConstant = 0.8;
     analyser.fftSize = 512;
 
-    gainNode = context.createGainNode();
+    gainNode = context.createGain();
     gainNode.gain.value = 1;
     try {
         sourceNode = context.createMediaElementSource(audio);
@@ -173,7 +175,7 @@ function getArrayAndFillSVG(flag) {
     selection.transition().duration(0).attr('y', 100).attr('x', function (d, i) {
         return i * 20;
     }).attr('height', function (d, i) {
-        return d * 1;
+        return d * 0.75;
     }).attr('width', 13).style('fill', function (d, i) {
         if (i < 20)
             return  "url(#red)";
