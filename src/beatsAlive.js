@@ -51,7 +51,7 @@ function loadSong(url) {
     audio.addEventListener("canplay", function (e) {
         setupAudioNodes();
     }, false);
-};
+}
 
 
 /**
@@ -60,36 +60,36 @@ function loadSong(url) {
 function initEQFilters() {
     // initialize eqFilters
     equalizer80Hz = context.createBiquadFilter();
-    equalizer80Hz.type = 5;
+    equalizer80Hz.type = 'peaking';
     equalizer80Hz.gain.value = 0;
     equalizer80Hz.Q.value = 1;
     equalizer80Hz.frequency.value = 80;
 
     equalizer240Hz = context.createBiquadFilter();
-    equalizer240Hz.type = 5;
+    equalizer240Hz.type =  'peaking';
     equalizer240Hz.gain.value = 0;
     equalizer240Hz.Q.value = 1;
     equalizer240Hz.frequency.value = 240;
 
     equalizer750Hz = context.createBiquadFilter();
-    equalizer750Hz.type = 5;
+    equalizer750Hz.type =  'peaking';
     equalizer750Hz.gain.value = 0;
     equalizer750Hz.Q.value = 1;
     equalizer750Hz.frequency.value = 750;
 
     equalizer2200Hz = context.createBiquadFilter();
-    equalizer2200Hz.type = 5;
+    equalizer2200Hz.type =  'peaking';
     equalizer2200Hz.gain.value = 0;
     equalizer2200Hz.Q.value = 1;
     equalizer2200Hz.frequency.value = 2200;
 
     equalizer6000Hz = context.createBiquadFilter();
-    equalizer6000Hz.type = 5;
+    equalizer6000Hz.type =  'peaking';
     equalizer6000Hz.gain.value = 0;
     equalizer6000Hz.Q.value = 1;
     equalizer6000Hz.frequency.value = 6000;
     eqInitiated = true;
-};
+}
 
 
 /**
@@ -127,7 +127,7 @@ function setupAudioNodes() {
     createSpectrum();
 
     //bind(context);
-};
+}
 
 
 /**
@@ -155,7 +155,7 @@ function createSpectrum() {
     document.getElementById('progress').setAttribute('max', audio.duration);
     drawSpectrum();
     progressTimer = setInterval("trackChange();", 100);
-};
+}
 
 
 /**
@@ -189,7 +189,7 @@ function getArrayAndFillSVG(flag) {
             return  "url(#grad2)";
     });
 
-};
+}
 
 
 /**
@@ -220,7 +220,7 @@ function drawSpectrum() {
     audioOver = false;
     getArrayAndFillSVG();
     requestAnimId = requestAnimationFrame(drawSpectrum);
-};
+}
 
 
 /**
@@ -229,7 +229,7 @@ function drawSpectrum() {
  */
 function volumeChange(e) {
     audio.volume = document.getElementById('vol').value;
-};
+}
 
 
 /**
@@ -248,7 +248,7 @@ function highPass(e) {
     else {
         highPassFilter.disconnect(0);
     }
-};
+}
 
 
 /**
@@ -267,7 +267,7 @@ function lowPass(e) {
     else {
         lowPassFilter.disconnect(0);
     }
-};
+}
 
 
 /**
@@ -283,7 +283,7 @@ function gainChange() {
     gainFilter.gain.value = document.getElementById('gain').value;
     sourceNode.connect(gainFilter);
     gainFilter.connect(context.destination);
-};
+}
 
 
 /**
@@ -307,7 +307,7 @@ function toggleMute() {
             document.getElementById('vol').setAttribute('disabled', 'disabled');
         }
     }
-};
+}
 
 /**
  * Toggles audio repeat and updates icons in the UI
@@ -321,7 +321,7 @@ function toggleRepeat() {
         repeat = true;
         document.getElementById('repeatIcon').src = "Images/repeat.png";
     }
-};
+}
 
 
 /**
@@ -330,13 +330,13 @@ function toggleRepeat() {
 function trackChange() {
     document.getElementById('progress').value = audio.currentTime;
     document.getElementById('progressTime').innerHTML = audio.currentTime.toString().getFormattedTime() + "/" + audio.duration.toString().getFormattedTime();
-};
+}
 function progressChange() {
     //console.log("progressChange");
     clearInterval(progressTimer);
     audio.currentTime = document.getElementById('progress').value;
     progressTimer = setInterval("trackChange();", 100);
-};
+}
 
 
 /**
@@ -356,7 +356,7 @@ function audioChange(that) {
         loadSong(file);
         document.getElementsByClassName('focus')[0].classList.remove('focus');
     }
-};
+}
 
 
 /**
@@ -376,7 +376,7 @@ function removeFromPlayList() {
             displayPlayList();
         }
     }
-};
+}
 
 
 /**
@@ -399,7 +399,7 @@ function addToPlaylist(that) {
     }
 //    console.log(playList);
     displayPlayList();
-};
+}
 
 
 /**
@@ -419,11 +419,11 @@ function displayPlayList() {
             if (document.getElementsByClassName('songItemFocused').length > 0)
                 document.getElementsByClassName('songItemFocused')[0].classList.remove('songItemFocused');
             this.classList.add('songItemFocused');
-        }
+        };
         ring.appendChild(songItem);
     }
     focusNowPlaying();
-};
+}
 
 
 /**
@@ -437,7 +437,7 @@ function next() {
         playAudio();
         return;
     }
-};
+}
 
 
 /**
@@ -452,7 +452,7 @@ function previous() {
         playAudio();
         return;
     }
-};
+}
 
 
 /**
@@ -524,7 +524,7 @@ function presetChanged(target) {
             document.getElementById('6000').value = 0;
         }
     }
-};
+}
 
 
 /**
@@ -537,7 +537,7 @@ function pauseAudio() {
         document.getElementById('pause').classList.add('focus');
         audio_paused_stopped = true;
     }
-};
+}
 
 
 /**
@@ -563,7 +563,7 @@ function playAudio() {
             focusNowPlaying();
         }
     }
-};
+}
 
 
 /**
@@ -576,7 +576,7 @@ function focusNowPlaying() {
         document.getElementsByClassName('songItem')[indexPlaying].classList.add('playingSong');
         document.getElementById('trackNameValue').innerHTML = playList[indexPlaying].name;
     }
-};
+}
 
 
 /**
@@ -590,7 +590,7 @@ function stopAudio() {
         document.getElementById('stop').classList.add('focus');
         audio_paused_stopped = true;
     }
-};
+}
 
 
 /**
@@ -619,7 +619,7 @@ function eqValueChange(target) {
         equalizer6000Hz.gain.value = target.value;
     }
 
-};
+}
 
 
 
