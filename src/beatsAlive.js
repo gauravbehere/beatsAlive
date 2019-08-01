@@ -21,20 +21,27 @@
  *
  */
 
+var audioAnimation, audioBuffer, source, sourceNode, analyser, audio, rectSVG, highPassFilter, lowPassFilter, gainFilter, storedVol = 1,
+    progressTimer = null,
+    playList = [],
+    indexPlaying = -1,
+    audioOver = false,
+    gainNode = null,
+    equalizer80Hz = null,
+    equalizer240Hz = null,
+    equalizer750Hz = null,
+    equalizer2200Hz = null,
+    equalizer6000Hz = null,
+    eqInitiated = false,
+    requestAnimId = null,
+    repeat = false,
+    audio_paused_stopped = false;
+    context= null;
 
-
-
-
-window.AudioContext = window.AudioContext || window.webkitAudioContext;
-var context = new AudioContext();
-
-var audioAnimation, audioBuffer, source,sourceNode, analyser, audio, rectSVG,
-highPassFilter, lowPassFilter, gainFilter, storedVol = 1, progressTimer = null,
-playList = [], indexPlaying = -1, audioOver = false, gainNode = null,
-equalizer80Hz = null, equalizer240Hz = null, equalizer750Hz = null,
-equalizer2200Hz = null, equalizer6000Hz = null, eqInitiated = false,
-requestAnimId = null, repeat = false, audio_paused_stopped = false;
-
+function setUpAudioContext() {
+  window.AudioContext = window.AudioContext || window.webkitAudioContext;
+  context = context || new AudioContext;
+}
 
 /**
  * Method: loadSong
@@ -544,6 +551,7 @@ function pauseAudio() {
  * Plays the audio updating the index
  */
 function playAudio() {
+    setUpAudioContext();
     if (playList.length > 0) {
         if (audio_paused_stopped == true) {
             if (playList.length == 1)
